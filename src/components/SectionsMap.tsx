@@ -1,43 +1,35 @@
 "use client";
 
 import useSectionStore from "@/store/sectionStore";
-import React from "react";
-
-const sections = [
-  {
-    title: "Section 1",
-    x: 48,
-    y: 48,
-    temp: 25,
-    umid: 98,
-    dataFrom: new Date(),
-  },
-  {
-    title: "Section 2",
-    x: 48,
-    y: 96,
-    temp: 28,
-    umid: 94,
-    dataFrom: new Date(),
-  },
-];
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
+import mapa from "@images/mapa.png";
 
 const SectionsMap = () => {
+  const [selecteds, setSelecteds] = useState([]);
+
   const { section: acSection, setSection } = useSectionStore();
   return (
     <div className="relative overflow-auto h-[400px] bg-zinc-950 rounded-lg p-4 mt-2">
-      {sections.map((section) => (
-        <div
-          onClick={() => setSection(section)}
-          style={{
-            left: section.x,
-            top: section.y,
-          }}
-          className={`h-12 w-12 border border-zinc-900 absolute cursor-pointer hover:bg-[rgb(19,19,19)] transition-all ${
-            section.title === acSection?.title && "bg-zinc-900"
-          }`}
-          key={section.title}
-        ></div>
+      <Image
+        className="absolute max-h-[1200px] select-none opacity-5 bg-cover max-w-[1600px]"
+        src={mapa}
+        alt="map"
+      />
+      {Array.from({ length: 16 }).map((_, i) => (
+        <React.Fragment key={i}>
+          {Array.from({ length: 12 }).map((_, j) => (
+            <div
+              onClick={() => setSelecteds([...selecteds, { i, j }])}
+              key={j}
+              className={`h-24 w-24 border border-zinc-100 absolute ${
+                selecteds.find((item) => item.i === i && item.j === j)?.i &&
+                "bg-red-500"
+              }`}
+              style={{ left: i * 96, top: j * 96 }}
+            ></div>
+          ))}
+        </React.Fragment>
       ))}
     </div>
   );

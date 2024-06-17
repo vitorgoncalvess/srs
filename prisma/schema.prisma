@@ -1,0 +1,46 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["views"]
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model Animal {
+  id_animal    Int            @id @default(autoincrement())
+  species      String
+  habitat      String
+  identifier   String
+  AnimalSensor AnimalSensor[]
+}
+
+model Sensor {
+  id_sensor    Int            @id @default(autoincrement())
+  name         String
+  type         String
+  description  String
+  AnimalSensor AnimalSensor[]
+}
+
+model DataSensor {
+  id_data          Int          @id @default(autoincrement())
+  valor            String
+  created_at       String
+  sensor           AnimalSensor @relation(fields: [fk_animal_sensor], references: [fk_animal, fk_sensor])
+  fk_animal_sensor Int
+}
+
+model AnimalSensor {
+  animal     Animal       @relation(fields: [fk_animal], references: [id_animal])
+  fk_animal  Int
+  sensor     Sensor       @relation(fields: [fk_sensor], references: [id_sensor])
+  fk_sensor  Int
+  min        Decimal
+  max        Decimal
+  offset     Decimal
+  DataSensor DataSensor[]
+
+  @@id([fk_animal, fk_sensor])
+}
