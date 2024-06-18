@@ -1,30 +1,23 @@
-import { SectionData, SectionRepository } from "@/utils/axiosConfig";
+import { SectionRepository } from "@/utils/axiosConfig";
+import { Sensor } from "@prisma/client";
 import { create } from "zustand";
 
 export interface SectionCord {
-  id_sensor: number;
-  cords: {
-    x: number;
-    y: number;
-  };
+  id: number;
+  lat: number;
+  lon: number;
 }
 
-export interface SectionInfo {
+interface Section {
   id: number;
-  created_at?: Date;
-  data?: {
-    temperature: number;
-    umid: number;
-  };
-  cords?: {
-    x: number;
-    y: number;
-  };
+  lat?: number;
+  lon?: number;
+  sensors?: Sensor[];
 }
 
 interface Store {
   sections: SectionCord[];
-  sectionSelected: SectionInfo | null;
+  sectionSelected: Section | null;
   loading: boolean;
   setSection: (id: number) => void;
   getSections: () => void;
@@ -43,18 +36,10 @@ const useSectionStore = create<Store>((set) => ({
         id,
       },
     }));
-    const info = (await sectionRepository.getSectionInfo(id)) as SectionData;
+    const info = await sectionRepository.getSectionInfo(id);
     set(() => ({
       loading: false,
-      sectionSelected: {
-        id,
-        created_at: new Date(info.created_at),
-        data: {
-          temperature: info.valor.temperature,
-          umid: info.valor.umid,
-        },
-        cords: info.sensor.description,
-      },
+      sectionSelected: info,
     }));
   },
   getSections: async () => {

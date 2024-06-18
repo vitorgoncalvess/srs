@@ -2,21 +2,6 @@ import axios from "axios";
 
 const instance = axios.create();
 
-export interface SectionData {
-  id_data: number;
-  valor: {
-    temperature: number;
-    umid: number;
-  };
-  created_at: string;
-  sensor: {
-    description: {
-      x: number;
-      y: number;
-    };
-  };
-}
-
 export class SectionRepository {
   async getSections() {
     try {
@@ -29,7 +14,7 @@ export class SectionRepository {
       return err;
     }
   }
-  async getSectionInfo(id: number): Promise<SectionData | unknown> {
+  async getSectionInfo(id: number) {
     try {
       const response = await instance.get(`/api/sections/${id}`);
       if (response.status === 200) {

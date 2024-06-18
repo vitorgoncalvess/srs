@@ -1,46 +1,44 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["views", "relationJoins"]
+  previewFeatures = ["views"]
 }
 
 datasource db {
-  provider = "sqlserver"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
-model Animal {
-  id_animal    Int            @id @default(autoincrement())
-  species      String
-  habitat      String
-  identifier   String
-  AnimalSensor AnimalSensor[]
+model Section {
+  id     Int      @id @default(autoincrement())
+  lat    Int
+  lon    Int
+  sensor Sensor[]
 }
 
 model Sensor {
-  id_sensor    Int            @id @default(autoincrement())
-  name         String
-  type         String
-  description  String
-  AnimalSensor AnimalSensor[]
-  DataSensor   DataSensor[]
+  id          Int          @id @default(autoincrement())
+  type        String
+  min         Decimal
+  max         Decimal
+  offset      Decimal
+  fk_section  Int
+  section     Section      @relation(fields: [fk_section], references: [id])
+  sensor_data SensorData[]
+
+  @@index([fk_section], map: "Sensor_fk_section_fkey")
 }
 
-model DataSensor {
-  id_data    Int    @id @default(autoincrement())
-  valor      String
-  created_at String
-  sensor     Sensor @relation(fields: [fk_sensor], references: [id_sensor])
+model SensorData {
+  id         Int      @id @default(autoincrement())
+  value      Decimal
+  created_at DateTime
   fk_sensor  Int
+  sensor     Sensor   @relation(fields: [fk_sensor], references: [id])
+
+  @@index([fk_sensor], map: "SensorData_fk_sensor_fkey")
 }
 
-model AnimalSensor {
-  animal    Animal  @relation(fields: [fk_animal], references: [id_animal])
-  fk_animal Int
-  sensor    Sensor  @relation(fields: [fk_sensor], references: [id_sensor])
-  fk_sensor Int
-  min       Decimal
-  max       Decimal
-  offset    Decimal
-
-  @@id([fk_animal, fk_sensor])
+view ViewMedia {
+  type          String   @id
+  average_value Decimal?
 }

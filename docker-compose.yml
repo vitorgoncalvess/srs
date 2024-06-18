@@ -1,8 +1,16 @@
 services:
-  sql-server:
-    image: mcr.microsoft.com/mssql/server:2022-latest
+  mysql:
+    image: mysql:5.7
+    restart: always
     environment:
-      - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=#Gf46045098838
+      - MYSQL_DATABASE=srs
+      - MYSQL_USER=username
+      - MYSQL_PASSWORD=1991
+      - MYSQL_ROOT_PASSWORD=1991
     ports:
-      - 1433:1433
+      - 3306:3306
+    volumes:
+      - my-db:/var/lib/mysql
+
+volumes:
+  my-db:

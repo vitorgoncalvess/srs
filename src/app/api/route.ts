@@ -1,10 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../lib/prisma";
 
-export async function GET() {
-  return NextResponse.json({ message: "bora" });
-}
-
 export async function POST() {
   const toCreate = [
     {
@@ -334,14 +330,33 @@ export async function POST() {
   ];
 
   toCreate.forEach(async (cords) => {
+    const { id } = await prisma.section.create({
+      data: {
+        lat: cords.i,
+        lon: cords.j,
+      },
+    });
+
     await prisma.sensor.create({
       data: {
-        name: "sensor_temp_umid",
-        type: "temp_umid_section",
-        description: `{"x": ${cords.i}, "y": ${cords.j}}`,
+        max: 24,
+        min: 12,
+        offset: 1,
+        type: "temperature",
+        fk_section: id,
+      },
+    });
+
+    await prisma.sensor.create({
+      data: {
+        max: 100,
+        min: 40,
+        offset: 2,
+        type: "umid",
+        fk_section: id,
       },
     });
   });
 
-  return NextResponse.json({ message: "sensores criados" });
+  return NextResponse.json({ message: "setores criados" });
 }

@@ -3,17 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "node server.js",
     "build": "next build",
-    "start": "next start",
+    "start": "NODE_ENVIROMENT=production node server.js",
     "lint": "next lint"
   },
   "dependencies": {
     "@prisma/client": "^5.15.0",
     "axios": "1.7.2",
+    "express": "^4.19.2",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5",
     "typeorm": "^0.3.20",
     "zod": "3.23.8",
     "zustand": "4.5.2"
