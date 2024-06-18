@@ -1,6 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["views"]
+  previewFeatures = ["views", "relationJoins"]
 }
 
 datasource db {
@@ -22,25 +22,25 @@ model Sensor {
   type         String
   description  String
   AnimalSensor AnimalSensor[]
+  DataSensor   DataSensor[]
 }
 
 model DataSensor {
-  id_data          Int          @id @default(autoincrement())
-  valor            String
-  created_at       String
-  sensor           AnimalSensor @relation(fields: [fk_animal_sensor], references: [fk_animal, fk_sensor])
-  fk_animal_sensor Int
+  id_data    Int    @id @default(autoincrement())
+  valor      String
+  created_at String
+  sensor     Sensor @relation(fields: [fk_sensor], references: [id_sensor])
+  fk_sensor  Int
 }
 
 model AnimalSensor {
-  animal     Animal       @relation(fields: [fk_animal], references: [id_animal])
-  fk_animal  Int
-  sensor     Sensor       @relation(fields: [fk_sensor], references: [id_sensor])
-  fk_sensor  Int
-  min        Decimal
-  max        Decimal
-  offset     Decimal
-  DataSensor DataSensor[]
+  animal    Animal  @relation(fields: [fk_animal], references: [id_animal])
+  fk_animal Int
+  sensor    Sensor  @relation(fields: [fk_sensor], references: [id_sensor])
+  fk_sensor Int
+  min       Decimal
+  max       Decimal
+  offset    Decimal
 
   @@id([fk_animal, fk_sensor])
 }

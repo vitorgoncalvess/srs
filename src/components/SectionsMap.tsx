@@ -2,13 +2,24 @@
 
 import useSectionStore from "@/store/sectionStore";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import mapa from "@images/mapa.png";
+import axios from "axios";
+import SectionIn from "./SectionIn";
 
 const SectionsMap = () => {
-  const [selecteds, setSelecteds] = useState([]);
+  const { sections, sectionSelected, setSection, getSections } =
+    useSectionStore();
 
-  const { section: acSection, setSection } = useSectionStore();
+  useEffect(() => {
+    getSections();
+    //eslint-disable-next-line
+  }, []);
+
+  const handleCreate = async () => {
+    await axios.post("/api");
+  };
+
   return (
     <div className="relative overflow-auto h-[400px] bg-zinc-950 rounded-lg p-4 mt-2">
       <Image
@@ -16,20 +27,8 @@ const SectionsMap = () => {
         src={mapa}
         alt="map"
       />
-      {Array.from({ length: 16 }).map((_, i) => (
-        <React.Fragment key={i}>
-          {Array.from({ length: 12 }).map((_, j) => (
-            <div
-              onClick={() => setSelecteds([...selecteds, { i, j }])}
-              key={j}
-              className={`h-24 w-24 border border-zinc-100 absolute ${
-                selecteds.find((item) => item.i === i && item.j === j)?.i &&
-                "bg-red-500"
-              }`}
-              style={{ left: i * 96, top: j * 96 }}
-            ></div>
-          ))}
-        </React.Fragment>
+      {sections.map((sect, index) => (
+        <SectionIn key={index} section={sect} />
       ))}
     </div>
   );

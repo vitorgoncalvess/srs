@@ -333,29 +333,15 @@ export async function POST() {
     },
   ];
 
-  const animal = await prisma.animal.create({
-    data: {
-      habitat: "pampa",
-      identifier: "sensor_temp_umid",
-      species: "sensor",
-    },
+  toCreate.forEach(async (cords) => {
+    await prisma.sensor.create({
+      data: {
+        name: "sensor_temp_umid",
+        type: "temp_umid_section",
+        description: `{"x": ${cords.i}, "y": ${cords.j}}`,
+      },
+    });
   });
 
-  const sensor = await prisma.sensor.create({
-    data: {
-      name: "sensor_temp_umid",
-      type: "temp_umid",
-      description: "capture temperatue and umidity",
-    },
-  });
-
-  await prisma.animalSensor.create({
-    data: {
-      fk_animal: animal.id_animal,
-      fk_sensor: sensor.id_sensor,
-      min: 13,
-      max: 39,
-      offset: 1,
-    },
-  });
+  return NextResponse.json({ message: "sensores criados" });
 }

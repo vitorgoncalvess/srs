@@ -5,7 +5,7 @@ import ImpactGraph from "@/components/ImpactGraph";
 import SectionInfo from "@/components/SectionInfo";
 import SectionsMap from "@/components/SectionsMap";
 
-export default function Home() {
+export default async function Home() {
   return (
     <main className="flex flex-col grow gap-4">
       <h1 className="text-4xl font-semibold">Dashboard</h1>
@@ -39,7 +39,7 @@ export default function Home() {
         <Card colSpan={3}>
           <CardTitle>Mapa da Região</CardTitle>
           <CardSubtitle>
-            Visualização se setores na região e suas informações
+            Visualização de setores na região e suas informações
           </CardSubtitle>
           <SectionsMap />
         </Card>
