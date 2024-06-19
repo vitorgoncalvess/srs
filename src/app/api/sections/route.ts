@@ -13,16 +13,6 @@ export async function POST() {
   const sections = await prisma.section.findMany({
     include: {
       sensor: {
-        where: {
-          OR: [
-            {
-              type: "temperature",
-            },
-            {
-              type: "umid",
-            },
-          ],
-        },
         include: {
           sensor_data: {
             take: 1,

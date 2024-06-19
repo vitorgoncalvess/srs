@@ -34,3 +34,19 @@ export async function GET(_: any, searchParams: { params: { id: number } }) {
 
   return NextResponse.json(section);
 }
+
+export async function POST(_: any, searchParams: { params: { id: string } }) {
+  await prisma.sensor.create({
+    data: {
+      type: "animal_temp",
+      offset: 2,
+      max: 42,
+      min: 25,
+      lat: Math.random() * 100,
+      lon: Math.random() * 100,
+      fk_section: Number(searchParams.params.id),
+    },
+  });
+
+  return NextResponse.json({ message: "Sensor criado" });
+}

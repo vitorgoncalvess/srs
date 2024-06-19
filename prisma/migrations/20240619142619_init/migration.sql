@@ -13,9 +13,12 @@ CREATE TABLE `Sensor` (
     `type` VARCHAR(191) NOT NULL,
     `min` DECIMAL(65, 30) NOT NULL,
     `max` DECIMAL(65, 30) NOT NULL,
+    `lat` INTEGER NOT NULL,
+    `lon` INTEGER NOT NULL,
     `offset` DECIMAL(65, 30) NOT NULL,
     `fk_section` INTEGER NOT NULL,
 
+    INDEX `Sensor_fk_section_fkey`(`fk_section`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -26,6 +29,7 @@ CREATE TABLE `SensorData` (
     `created_at` DATETIME(3) NOT NULL,
     `fk_sensor` INTEGER NOT NULL,
 
+    INDEX `SensorData_fk_sensor_fkey`(`fk_sensor`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

@@ -20,6 +20,8 @@ model Sensor {
   type        String
   min         Decimal
   max         Decimal
+  lat         Int
+  lon         Int
   offset      Decimal
   fk_section  Int
   section     Section      @relation(fields: [fk_section], references: [id])

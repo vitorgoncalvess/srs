@@ -28,10 +28,10 @@ const SectionIn = ({ section, socket }: Props) => {
     <div
       onClick={() => setSection(section.id)}
       style={{
-        left: `${section.lat * 96}px`,
-        top: `${section.lon * 96}px`,
+        left: `${section.lat * 68}px`,
+        top: `${section.lon * 68}px`,
       }}
-      className={`absolute w-24 h-24 border border-zinc-500 cursor-pointer transition-all ${
+      className={`absolute w-[68px] h-[68px] border border-zinc-500 cursor-pointer rounded-lg transition-all ${
         sectionSelected?.id === section.id && "bg-zinc-800 bg-opacity-50"
       } ${update && "animate-new bg-white"}`}
     ></div>

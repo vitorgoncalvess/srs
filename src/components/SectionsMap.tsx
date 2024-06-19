@@ -7,6 +7,7 @@ import mapa from "@images/mapa.png";
 import axios from "axios";
 import SectionIn from "./SectionIn";
 import { io } from "socket.io-client";
+import instance from "@/utils/axiosConfig";
 
 const socket = io(process.env.NEXT_PUBLIC_LOCAL_URL || "");
 
@@ -15,12 +16,12 @@ const SectionsMap = () => {
 
   useEffect(() => {
     getSections();
-    axios.post("/api/sections");
+    instance.post("/sections");
     //eslint-disable-next-line
   }, []);
 
   const handleCreate = async () => {
-    await axios.post("/api");
+    await instance.post("/");
   };
 
   return (
@@ -29,7 +30,7 @@ const SectionsMap = () => {
         Criar
       </button>
       <Image
-        className="absolute max-h-[1200px] select-none opacity-5 bg-cover max-w-[1600px]"
+        className="absolute max-h-[800px] select-none opacity-5 bg-cover max-w-[1200px]"
         src={mapa}
         alt="map"
       />

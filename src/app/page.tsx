@@ -8,9 +8,7 @@ import instance from "@/utils/axiosConfig";
 
 const getTempAndUmid = async () => {
   try {
-    const response = await instance.get(
-      process.env.NEXT_PUBLIC_LOCAL_URL || ""
-    );
+    const response = await instance.get(`/geral`);
     if (response.status === 200) {
       return response.data;
     }
@@ -37,10 +35,18 @@ export default async function Home() {
           <CardSubtitle>
             Umidade capturada da região ao longo do tempo
           </CardSubtitle>
-          <div className="flex items-center justify-center h-full">
-            <h1 className="text-3xl font-semibold">
+          <div className="flex items-center justify-start gap-4 h-full py-4">
+            <div className="h-full w-2 bg-zinc-500 rounded flex items-end">
+              <div
+                className="w-full bg-green-400 rounded"
+                style={{
+                  height: `${Number(data[1].average_value)}%`,
+                }}
+              ></div>
+            </div>
+            <h1 className="text-4xl font-semibold">
               {data
-                ? Number(data[1]?.average_value)?.toFixed(2)
+                ? Number(data[1]?.average_value)?.toFixed(2) + "%"
                 : "Nenhum dado capturado."}
             </h1>
           </div>
@@ -50,10 +56,18 @@ export default async function Home() {
           <CardSubtitle>
             Temperatura capturada da região ao longo do tempo
           </CardSubtitle>
-          <div className="flex items-center justify-center h-full">
-            <h1 className="text-3xl font-semibold">
+          <div className="flex items-center justify-start gap-4 h-full py-4">
+            <div className="h-full w-2 bg-zinc-500 rounded flex items-end">
+              <div
+                className="w-full bg-green-400 rounded"
+                style={{
+                  height: `${(Number(data[0].average_value) / 40) * 100}%`,
+                }}
+              ></div>
+            </div>
+            <h1 className="text-4xl font-semibold">
               {data
-                ? Number(data[0].average_value).toFixed(2)
+                ? Number(data[0]?.average_value)?.toFixed(2) + "°C"
                 : "Nenhum dado capturado."}
             </h1>
           </div>

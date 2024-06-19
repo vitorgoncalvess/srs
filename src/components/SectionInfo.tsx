@@ -2,10 +2,13 @@
 "use client";
 
 import useSectionStore from "@/store/sectionStore";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const SectionInfo = () => {
   const { sectionSelected, loading } = useSectionStore();
+
+  const router = useRouter();
 
   return (
     <div className="mt-2 h-[400px]">
@@ -29,23 +32,38 @@ const SectionInfo = () => {
                 <div>
                   <h4 className="text-xl font-medium">Temperatura</h4>
                   <h4 className="text-lg">
-                    {Number(
-                      sectionSelected.sensor[0].sensor_data[0].value
-                    ).toFixed(2)}
-                    °C
+                    {sectionSelected.sensor[0]?.sensor_data[0] ? (
+                      Number(
+                        sectionSelected?.sensor[0]?.sensor_data[0]?.value
+                      ).toFixed(2) + "°C"
+                    ) : (
+                      <h1 className="font-medium text-sm">
+                        Dado não capturado
+                      </h1>
+                    )}
                   </h4>
                 </div>
                 <div>
                   <h4 className="text-xl font-medium">Umidade</h4>
                   <h4 className="text-lg">
-                    {Number(
-                      sectionSelected.sensor[1].sensor_data[0].value
-                    ).toFixed(2)}
-                    %
+                    {sectionSelected.sensor[1]?.sensor_data[0] ? (
+                      Number(
+                        sectionSelected?.sensor[1]?.sensor_data[0]?.value
+                      ).toFixed(2) + "%"
+                    ) : (
+                      <h1 className="font-medium text-sm">
+                        Dado não capturado
+                      </h1>
+                    )}
                   </h4>
                 </div>
-                <h4>Data do registro dos dados: </h4>
-                <button className="bg-zinc-950 py-2 px-4 hover:opacity-90 rounded-xl font-semibold">
+                {sectionSelected.sensor[0]?.sensor_data[0] && (
+                  <h4>Data do registro dos dados: </h4>
+                )}
+                <button
+                  onClick={() => router.push(`/section/${sectionSelected.id}`)}
+                  className="bg-zinc-950 py-2 px-4 hover:opacity-90 rounded-xl font-semibold"
+                >
                   Ver Mais Informações
                 </button>
               </div>

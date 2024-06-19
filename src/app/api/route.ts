@@ -344,6 +344,8 @@ export async function POST() {
         offset: 1,
         type: "temperature",
         fk_section: id,
+        lat: Math.random() * 100,
+        lon: Math.random() * 100,
       },
     });
 
@@ -354,6 +356,8 @@ export async function POST() {
         offset: 2,
         type: "umid",
         fk_section: id,
+        lat: Math.random() * 100,
+        lon: Math.random() * 100,
       },
     });
   });

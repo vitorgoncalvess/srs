@@ -1,11 +1,13 @@
 import axios from "axios";
 
-const instance = axios.create();
+const instance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_LOCAL_URL + "/api",
+});
 
 export class SectionRepository {
   async getSections() {
     try {
-      const response = await instance.get("/api/sections");
+      const response = await instance.get("/sections");
       if (response.status === 200) {
         return response.data;
       }
@@ -16,7 +18,7 @@ export class SectionRepository {
   }
   async getSectionInfo(id: number) {
     try {
-      const response = await instance.get(`/api/sections/${id}`);
+      const response = await instance.get(`/sections/${id}`);
       if (response.status === 200) {
         return response.data;
       }
