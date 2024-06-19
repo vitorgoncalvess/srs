@@ -39,9 +39,11 @@ export default async function Home() {
             <div className="h-full w-2 bg-zinc-500 rounded flex items-end">
               <div
                 className="w-full bg-green-400 rounded"
-                style={{
-                  height: `${Number(data[1].average_value)}%`,
-                }}
+                style={
+                  data && {
+                    height: `${Number(data[1]?.average_value)}%`,
+                  }
+                }
               ></div>
             </div>
             <h1 className="text-4xl font-semibold">
@@ -60,9 +62,11 @@ export default async function Home() {
             <div className="h-full w-2 bg-zinc-500 rounded flex items-end">
               <div
                 className="w-full bg-green-400 rounded"
-                style={{
-                  height: `${(Number(data[0].average_value) / 40) * 100}%`,
-                }}
+                style={
+                  data && {
+                    height: `${(Number(data[0]?.average_value) / 40) * 100}%`,
+                  }
+                }
               ></div>
             </div>
             <h1 className="text-4xl font-semibold">
