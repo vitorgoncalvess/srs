@@ -1,6 +1,8 @@
+//@ts-nocheck
+
 "use client";
 
-import { Sensor } from "@prisma/client";
+import { Sensor, SensorData } from "@prisma/client";
 import React, { useEffect } from "react";
 import useSensorStore from "@/store/sensorStore";
 import { Icon } from "@iconify/react/dist/iconify.js";

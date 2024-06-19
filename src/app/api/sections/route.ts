@@ -34,7 +34,7 @@ export async function POST() {
 
   interval = setInterval(async () => {
     const index = Math.floor(Math.random() * sections.length);
-    sections[index].sensor.forEach(async (sen) => {
+    sections[index].sensor.forEach(async (sen: any) => {
       const upOrDown = Math.floor(Math.random() * 100);
       let toChange = Math.random() * sen.offset.toNumber();
       if (upOrDown < 50) {
