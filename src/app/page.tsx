@@ -77,9 +77,9 @@ export default async function Home() {
           </div>
         </Card>
         <Card>
-          <CardTitle>Informações da Seção</CardTitle>
+          <CardTitle>Informações do Setor</CardTitle>
           <CardSubtitle>
-            Mais informações da seção selecionada no mapa
+            Mais informações do setor selecionado no mapa
           </CardSubtitle>
           <SectionInfo />
         </Card>
